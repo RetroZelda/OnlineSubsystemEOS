@@ -224,6 +224,11 @@ FText FOnlineSubsystemEOS::GetOnlineServiceName() const
 	return NSLOCTEXT( "OnlineSubsystemEOS", "OnlineServiceName", "EOS" );
 }
 
+IOnlineStorePtr FOnlineSubsystemEOS::GetStoreInterface() const
+{
+	return nullptr;
+}
+
 bool FOnlineSubsystemEOS::Tick( float DeltaTime )
 {
 	if( IsEOSInitialized() == true )

@@ -1,5 +1,5 @@
 # OnlineSubsystemEOS - fork of UE4_EOS_Plugin
-This fork strips out the same project to allow for proper submoduling of the plugin.
+This fork strips out the example project to allow for proper submoduling of the plugin.
 
 # ORIGINAL README:
 A plugin and sample project, built for Unreal Engine 4, that implements the Epic Online Services SDK

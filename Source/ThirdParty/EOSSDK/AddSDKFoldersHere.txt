@@ -1,1 +1,3 @@
-Add the Bin, Include and Lib folders from the SDK to this folder.
+Dont add the Bin, Include and Lib folders from the SDK to this folder.
+
+Add them to {project}/Plugins/3rdparty/EOS where EOS is the root of the extracted zip that is downloaded from the EOS Portal

@@ -21,7 +21,9 @@ public class EOSSDK : ModuleRules
             OptimizeCode = CodeOptimization.Never;
         }
 
-        string BaseDirectory = Path.GetFullPath( Path.Combine( ModuleDirectory, "..", "..", "ThirdParty", "EOSSDK" ) );
+        // we want to link to 3rd party libs through the project, and not through the plugin
+        string combined = Path.Combine( PluginDirectory, "..", "3rdparty", "EOS", "SDK" );
+        string BaseDirectory = Path.GetFullPath( combined );
 
         // Check if the EOS SDK exists.
         if( Directory.Exists( BaseDirectory ) )
@@ -29,11 +31,11 @@ public class EOSSDK : ModuleRules
             PublicDefinitions.Add( "EOS_SDK_INSTALLED" );
         }
 
+        // Include headers
+        PublicIncludePaths.Add( Path.Combine( BaseDirectory, "Include" ) );
+
         if( Target.Platform == UnrealTargetPlatform.Win64 )
         {
-            // Include headers
-            PublicIncludePaths.Add( Path.Combine( BaseDirectory, "Include" ) );
-
             // Add the import library
             PublicAdditionalLibraries.Add( Path.Combine( BaseDirectory, "Lib", "EOSSDK-Win64-Shipping.lib" ) );
 
@@ -44,9 +46,6 @@ public class EOSSDK : ModuleRules
         
         if( Target.Platform == UnrealTargetPlatform.Win32 )
         {
-            // Include headers
-            PublicIncludePaths.Add( Path.Combine( BaseDirectory, "Include" ) );
-
             // Add the import library
             PublicAdditionalLibraries.Add( Path.Combine( BaseDirectory, "Lib", "EOSSDK-Win32-Shipping.lib" ) );
 
@@ -56,18 +55,12 @@ public class EOSSDK : ModuleRules
         }
         else if( Target.Platform == UnrealTargetPlatform.Linux )
         {
-            // Include headers
-            PublicIncludePaths.Add( Path.Combine( BaseDirectory, "Include" ) );
-
             // Add the import library
             PublicAdditionalLibraries.Add( Path.Combine( BaseDirectory, "Bin", "libEOSSDK-Linux-Shipping.so" ) );
             RuntimeDependencies.Add( Path.Combine( BaseDirectory, "Bin", "libEOSSDK-Linux-Shipping.so" ) );
         }
         else if( Target.Platform == UnrealTargetPlatform.Mac )
         {
-            // Include headers
-            PublicIncludePaths.Add( Path.Combine( BaseDirectory, "Include" ) );
-
             // Add the import library
             PublicAdditionalLibraries.Add( Path.Combine( BaseDirectory, "Bin", "libEOSSDK-Mac-Shipping.dylib" ) );
             RuntimeDependencies.Add( Path.Combine( BaseDirectory, "Bin", "libEOSSDK-Mac-Shipping.dylib" ) );

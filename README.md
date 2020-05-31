@@ -1,4 +1,7 @@
-# UE4_EOS_Plugin
+# OnlineSubsystemEOS - fork of UE4_EOS_Plugin
+This fork strips out the same project to allow for proper submoduling of the plugin.
+
+# ORIGINAL README:
 A plugin and sample project, built for Unreal Engine 4, that implements the Epic Online Services SDK
 
 This plugin does not include the EOS (Epic Online Services) SDK.  You will have to register and download this separately.  Then copy the Bin, Include and Lib folders to the Plugins/Source/ThirdParty/EOSSDK directory.

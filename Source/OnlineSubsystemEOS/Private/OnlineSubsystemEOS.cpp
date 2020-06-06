@@ -313,14 +313,22 @@ bool FOnlineSubsystemEOS::InitializeSDK()
 
 	EOS_EResult InitResult = EOS_Initialize( &SDKOptions );
 
-	if( InitResult != EOS_EResult::EOS_Success )
+	if(InitResult == EOS_EResult::EOS_AlreadyConfigured)
 	{
-		UE_LOG_ONLINE( Warning, TEXT( "EOS SDK Initialization: FAILED!" ) );
+		UE_LOG_ONLINE( Warning, TEXT( "EOS SDK Initialization: Already Configured!" ) );
+	}
+	else if( InitResult != EOS_EResult::EOS_Success )
+	{
+		UE_LOG_ONLINE( Warning, TEXT( "EOS SDK Initialization: FAILED! Result=%d" ), InitResult );
 		return false;
 	}
+	else
+	{
+		UE_LOG_ONLINE( Warning, TEXT( "EOS SDK Initialization: Success!" ) );
+	}
+	
 
 	bEOSInitialized = true;
-	UE_LOG_ONLINE( Warning, TEXT( "EOS SDK Initialization: Success!" ) );
 	return true;
 }
 

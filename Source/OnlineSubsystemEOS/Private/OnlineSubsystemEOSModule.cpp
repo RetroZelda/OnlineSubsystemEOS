@@ -58,10 +58,8 @@ public:
 				UE_LOG_ONLINE( Warning, TEXT( "EOS API disabled!" ) );
 				DestroySubsystem();
 			}
-
 			return EOSSingleton;
 		}
-
 		UE_LOG_ONLINE( Warning, TEXT( "Can't create more than one instance of EOS online subsystem!" ) );
 		return nullptr;
 	}
@@ -86,7 +84,6 @@ FOnlineSubsystemEOSPtr FOnlineFactoryEOS::EOSSingleton = nullptr;
 
 void FOnlineSubsystemEOSModule::StartupModule()
 {
-#if !PLATFORM_LINUX
 #if defined( EOS_LIB )
 	// Get the base directory of this plugin
 	FString BaseDir = "";
@@ -97,7 +94,9 @@ void FOnlineSubsystemEOSModule::StartupModule()
 		BaseDir = EOSOSS->GetBaseDir();
 	}
 	
-	const FString SDKDir = FPaths::Combine( *BaseDir, TEXT( "Source" ), TEXT( "ThirdParty" ), TEXT( "EOSSDK" ) );
+	// HACK: Holding the EOS SDK as an empty 3rdparty plugin outside of this plugin... so navigate to that.
+	// const FString SDKDir = FPaths::Combine( *BaseDir, TEXT( "Source" ), TEXT( "ThirdParty" ), TEXT( "EOSSDK" ) );
+	const FString SDKDir = FPaths::Combine( *BaseDir, TEXT(".."), TEXT( "3rdparty" ), TEXT( "EOS" ), TEXT( "SDK" ) );
 	bool bLoaded = false;
 
 #if PLATFORM_WINDOWS
@@ -110,6 +109,9 @@ void FOnlineSubsystemEOSModule::StartupModule()
 	const FString LibDir = FPaths::Combine( *SDKDir, TEXT( "Bin" ) );
 #elif PLATFORM_MAC
 	const FString LibName = TEXT( "libEOSSDK-Mac-Shipping" );
+	const FString LibDir = FPaths::Combine( *SDKDir, TEXT( "Bin" ) );
+#elif PLATFORM_LINUX
+	const FString LibName = TEXT( "libEOSSDK-Linux-Shipping" );
 	const FString LibDir = FPaths::Combine( *SDKDir, TEXT( "Bin" ) );
 #endif // WINDOWS/MAC
 
@@ -128,16 +130,13 @@ void FOnlineSubsystemEOSModule::StartupModule()
 	OSS.RegisterPlatformService( EOS_SUBSYSTEM, EOSFactory );
 
 #endif // EOS_LIB
-#endif // NOT LINUX
 }
 
 void FOnlineSubsystemEOSModule::ShutdownModule()
 {
 	// Free the dll handle
-#if !PLATFORM_LINUX
 #if defined( EOS_LIB )
 	FreeDependency( EOSSDKHandle );
-#endif
 #endif
 }
 

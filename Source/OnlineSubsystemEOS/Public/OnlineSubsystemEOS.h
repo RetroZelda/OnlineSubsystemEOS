@@ -67,7 +67,6 @@ public:
 	virtual bool						IsEnabled() const override;
 	virtual FString						GetAppId() const override;
 	virtual FText						GetOnlineServiceName() const override;
-	virtual IOnlineStorePtr 			GetStoreInterface() const override;
 
 	// FTickerObjectBase
 	virtual bool						Tick( float DeltaTime ) override;

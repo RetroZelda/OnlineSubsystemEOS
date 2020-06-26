@@ -2,7 +2,6 @@
 
 #pragma once
 
-
 // EOS Includes
 #include "eos_sdk.h"
 #include "eos_logging.h"
